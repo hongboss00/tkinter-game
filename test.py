@@ -23,6 +23,7 @@ velx = 0
 vely = 0
 x = 800
 y = 0
+jumpstatus = True
 obstacles = []
 
 
@@ -36,9 +37,9 @@ mCanvas = Canvas(root, bg = "#222222", bd = 3, width = 1600, height = 800)
 #objects
 img = PhotoImage(file = "src/hi_2.png")
 user = mCanvas.create_rectangle(x, y, x+50, y+50, outline = 'white', fill = 'white')
-obstacle1 = obstacle(800, 300 ,mCanvas,100,35)
-obstacle2 = obstacle(600, 700, mCanvas,1000, 25)
-obstacle3 = obstacle(1400, 300, mCanvas,100, 25)
+obstacle1 = obstacle(800, 480 ,mCanvas,100,1)
+obstacle2 = obstacle(600, 700, mCanvas,1000, 1)
+obstacle3 = obstacle(1400, 480, mCanvas,100, 1)
 
 #init
 mCanvas.pack()
@@ -64,13 +65,16 @@ def move():
     global user
     global vely
     global obstacles
+    global jumpstatus
 
     mCanvas.delete(user)
 
     if checkCollison():
         vely = 0
+        jumpstatus = False
     else: 
         gravity()
+        jumpstatus = True
 
     x += velx
     y += vely
@@ -94,14 +98,36 @@ def key_press(event):
     if(lastkey == "Right"):
         velx = speed
     if(lastkey == 'Up'):
-        vely -=1.3
+        vely -=1.7
         y -= 4
+
+def keyLeft(event):
+    global velx
+    velx = -speed
+
+def keyRight(event):
+    global velx
+    velx = speed
+
+def keyUp(event):
+    global vely
+    global y
+    global jumpstatus
+
+    if jumpstatus == False:
+        vely -=1.7
+        y -= 4
+    else:
+        return
 
 
 def key_release(event):
     global velx
     global lastkey
-    velx = 0
+    if lastkey == 'Up':
+        return
+    else:
+        velx = 0
 
 def checkCollison():
     global obstacles
@@ -141,7 +167,9 @@ def gameLoop():
     root.after(gamespeed, gameLoop)
 
 mCanvas.focus_set()
-mCanvas.bind("<KeyPress>", key_press)
+mCanvas.bind("<Left>", keyLeft)
+mCanvas.bind("<Right>", keyRight)
+mCanvas.bind("<Up>", keyUp)
 mCanvas.bind("<KeyRelease>", key_release)
 
 init()
