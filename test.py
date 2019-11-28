@@ -18,7 +18,7 @@ class obstacle:
 
 #전역변수
 gamespeed = 1
-speed = 0.5
+speed = 0.6
 velx = 0
 vely = 0
 x = 800
