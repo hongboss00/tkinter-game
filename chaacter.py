@@ -13,6 +13,7 @@ class Character:
         self.root = tk
         self.mcanvas = canvas
 
+
     def draw(self):
         self.mcanvas.create_rectangle(self.x, self.y, self.xwidth, self.yheight, outline = "red", fill = 'yellow')
 
@@ -26,8 +27,15 @@ class Character:
         self.dx = dx
     def setDy(self, dy):
         self.dy = dy
-    
 
-    
+    def checkCollison(self, map):
+        p1x = self.x
+        p1y = self.y
+        p2x = self.xwidth
+        p2y = self.yheight
+        p3x = map.x
+        p3y = map.y
+        p4x = map.xwidth
+        p4y = map.yheight
 
-    
+        overlapped = (p3x < pzx and p2x < p4x) and (abs(p2y - p3y) < 5)

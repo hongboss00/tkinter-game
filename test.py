@@ -37,9 +37,9 @@ mCanvas = Canvas(root, bg = "#222222", bd = 3, width = 1600, height = 800)
 #objects
 img = PhotoImage(file = "src/hi_2.png")
 user = mCanvas.create_rectangle(x, y, x+50, y+50, outline = 'white', fill = 'white')
-obstacle1 = obstacle(800, 480 ,mCanvas,100,1)
-obstacle2 = obstacle(600, 700, mCanvas,1000, 1)
-obstacle3 = obstacle(1400, 480, mCanvas,100, 1)
+obstacle1 = obstacle(800, 480 ,mCanvas,100,10)
+obstacle2 = obstacle(600, 700, mCanvas,1000, 10)
+obstacle3 = obstacle(1400, 480, mCanvas,100, 10)
 
 #init
 mCanvas.pack()
@@ -142,10 +142,14 @@ def checkCollison():
         p4x = obj.xwidth
         p4y = obj.yheight
         
-        overlapped = not( p4x < p1x \
+        '''overlapped = not( p4x < p1x \
                         or p3x > p2x \
                         or p2y < p3y \
-                        or p1y > p4y)
+                        or p1y > p4y)'''
+        overlapped = not( p4x < p1x \
+                        or p3x > p2x \
+                        or p2y != p3y )
+        overlapped = (p3x < p1x and p2x < p4x) and ( abs(p2y-p3y) < 5)
 
         if overlapped:
             break
