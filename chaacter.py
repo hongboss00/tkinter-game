@@ -38,4 +38,4 @@ class Character:
         p4x = map.xwidth
         p4y = map.yheight
 
-        overlapped = (p3x < pzx and p2x < p4x) and (abs(p2y - p3y) < 5)
+        overlapped = (p3x < p1x and p2x < p4x) and (abs(p2y - p3y) < 5)
