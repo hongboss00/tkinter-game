@@ -1,8 +1,10 @@
 from tkinter import *
 
 class Character:
-    def __init__(self, x, y, tk, canvas, width=50, height=50):
-        self.speed = 1.5
+    def __init__(self, x, y, tk, canvas, width=40, height=40):
+        self.speed = 3
+        self.jump = 8
+        self.jump_option = 7
 
         self.x = x
         self.y = y
@@ -22,7 +24,9 @@ class Character:
         self.obj = object()
 
         self.unit_index = 0
-        self.unit_photo = [PhotoImage(file = 'unit1.png'), PhotoImage(file = 'unit2.png'), PhotoImage(file = 'unit3.png')]
+        self.unit_photo = [PhotoImage(file = 'unit1.png').subsample(4), 
+                            PhotoImage(file = 'unit2.png').subsample(4), 
+                            PhotoImage(file = 'unit3.png').subsample(4)]
 
         self.root.bind('<Left>', self.keyLeft)
         self.root.bind('<Right>', self.keyRight)
@@ -50,7 +54,7 @@ class Character:
 
     #중력 적용
     def Gravity(self):
-        self.dy += 9.8 * 0.01
+        self.dy += 9.8 * 0.02
         
     #점프는 한번만 허용
     def setJumpStatus(self, whether):
@@ -87,8 +91,8 @@ class Character:
         self.dx = self.speed
     def keyUp(self, event):
         if not self.jumpstatus:
-            self.dy -= 6
-            self.y -= 8
+            self.dy -= self.jump
+            self.y -= self.jump_option
         else:
             return
     def keyRelease(self, event):
