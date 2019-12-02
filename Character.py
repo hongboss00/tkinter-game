@@ -1,6 +1,8 @@
+from tkinter import *
+
 class Character:
     def __init__(self, x, y, tk, canvas, width=50, height=50):
-        self.speed = 0.6
+        self.speed = 1.5
 
         self.x = x
         self.y = y
@@ -19,6 +21,9 @@ class Character:
         self.mcanvas = canvas
         self.obj = object()
 
+        self.unit_index = 0
+        self.unit_photo = [PhotoImage(file = 'unit1.png'), PhotoImage(file = 'unit2.png'), PhotoImage(file = 'unit3.png')]
+
         self.root.bind('<Left>', self.keyLeft)
         self.root.bind('<Right>', self.keyRight)
         self.root.bind('<Up>', self.keyUp)
@@ -26,10 +31,11 @@ class Character:
 
 
     def draw(self):
-        self. obj = self.mcanvas.create_rectangle(self.x, self.y, 
+        '''self. obj = self.mcanvas.create_rectangle(self.x, self.y, 
                                                   self.x + self.width,
                                                   self.y + self.height,
-                                                  outline = "red", fill = 'yellow')
+                                                  outline = "red", fill = 'yellow')'''
+        self.obj = self.mcanvas.create_image(self.x, self.y, image = self.unit_photo[self.unit_index])
 
     #주인공 x, y 좌표 설정
     def move(self):
@@ -44,7 +50,7 @@ class Character:
 
     #중력 적용
     def Gravity(self):
-        self.dy += 9.8 * 0.0006
+        self.dy += 9.8 * 0.01
         
     #점프는 한번만 허용
     def setJumpStatus(self, whether):
@@ -69,7 +75,7 @@ class Character:
 
             self.overlapped = ((p3x < p1x and p2x < p4x) \
                                 or (p1x < p3x < p2x) or \
-                                    (p1x <p4x<p2x ))and (abs(p2y - p3y) < 2)
+                                    (p1x <p4x<p2x ))and (abs(p2y - p3y) < 4)
             if self.overlapped:
                 break
         return self.overlapped
@@ -81,8 +87,8 @@ class Character:
         self.dx = self.speed
     def keyUp(self, event):
         if not self.jumpstatus:
-            self.dy -= 1.7
-            self.y -= 4
+            self.dy -= 6
+            self.y -= 8
         else:
             return
     def keyRelease(self, event):
@@ -90,3 +96,6 @@ class Character:
             return
         else:
             self.dx = 0
+
+    def setUnit(self, unit_index):
+        self.unit_index = unit_index

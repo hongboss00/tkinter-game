@@ -1,5 +1,5 @@
 from tkinter import *
-from guide_unitselector import *
+from Selector import *
 
 root = Tk()
 mcanvas = Canvas(root, bg = "#222222", bd = 3, width = 1600, height = 800)
@@ -13,4 +13,4 @@ def Loop():
 
 Loop()
 mcanvas.pack()
-root.mainloop()
+root.mainloop() 
