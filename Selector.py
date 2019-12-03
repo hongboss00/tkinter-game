@@ -51,12 +51,13 @@ class Selector:
 
             self.mcanvas.create_image(1200, 400, anchor = CENTER, image = self.img3)
             self.mcanvas.create_text(1200, 500, fill = '#222222', font = 'Arial', anchor = CENTER,
-                                        text = 'HYUN ROE')
+                                        text = 'HYUN RO')
             self.mcanvas.create_text(800, 700, fill = 'white', font = 'Arial', anchor = CENTER,
                                         text = 'PRESS <SPACE> TO SELECT AND PRESS <INSERT> TO START')
         else:
             self.mcanvas
             pass
+        
             
     ''' 키보드 왼쪽 오른쪽으로 난이도 / 캐릭터 고르고 확정되면 Enter로 확정
         즉 난이도 고르고 엔터 누르고 캐릭터 고르고 엔터 누르면 게임시작'''

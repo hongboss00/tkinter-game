@@ -12,9 +12,6 @@ class Character:
         self.dy = 0
         self.width = width
         self.height = height
-
-        self.xwidth = self.x + self.width
-        self.yheight = self.y + self.height
         
         self.jumpstatus = False
         self.overlapped = False
@@ -25,7 +22,7 @@ class Character:
 
         self.unit_index = 0
         self.unit_photo = [PhotoImage(file = 'unit1.png').subsample(4), 
-                            PhotoImage(file = 'unit2.png').subsample(4), 
+                            PhotoImage(file = 'unit2.png').subsample(4),   #각 주인공별 이미지
                             PhotoImage(file = 'unit3.png').subsample(4)]
 
         self.root.bind('<Left>', self.keyLeft)
@@ -48,19 +45,33 @@ class Character:
     def setDy(self, dy):
         self.dy = dy
 
-    #중력 적용
-    def Gravity(self):
-        self.dy += 9.8 * 0.02
-        
-    #점프는 한번만 허용
-    def setJumpStatus(self, whether):
-        self.jumpstatus = whether
-
-
     def clearCanvas(self):
         self.mcanvas.delete(self.obj)
 
     
+    def keyLeft(self, event):
+        self.dx = -self.speed    
+    def keyRight(self, event):
+        self.dx = self.speed
+    def keyUp(self, event):
+        if not self.jumpstatus:
+            self.dy -= self.jump
+            self.y -= self.jump_option
+        else:
+            return
+    def keyRelease(self, event):
+        if event.keysym == 'Up':
+            return
+        else:
+            self.dx = 0
+
+    #중력 적용
+    def Gravity(self):
+        self.dy += 9.8 * 0.02
+    
+    #점프는 한번만 허용
+    def setJumpStatus(self, whether):
+        self.jumpstatus = whether
 
     def checkCollison(self, map):
         for obj in map:
@@ -81,21 +92,5 @@ class Character:
         return self.overlapped
 
 
-    def keyLeft(self, event):
-        self.dx = -self.speed    
-    def keyRight(self, event):
-        self.dx = self.speed
-    def keyUp(self, event):
-        if not self.jumpstatus:
-            self.dy -= self.jump
-            self.y -= self.jump_option
-        else:
-            return
-    def keyRelease(self, event):
-        if event.keysym == 'Up':
-            return
-        else:
-            self.dx = 0
-
-    def setUnit(self, unit_index):
+    def setUnit(self, unit_index):     #index를 통해 캐릭터 (동의/선기/현로) 결정
         self.unit_index = unit_index

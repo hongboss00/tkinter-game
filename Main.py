@@ -1,29 +1,38 @@
 from tkinter import *
 from Map import *
 from Character import *
-from random import *
 from math import *
 from Selector import *
 from Pattern import *
 from Score import *
 
+'''class Start:
+    def __init__(self, tk, canvas):
+        self.root = tk
+        self.mcanvas = canvas
+        self.mainphoto = PhotoImage(file = 'titlepage.png')
+        self.b1 = Button(self.mcanvas, text="시작하기",width=20, height=3,
+            relief="solid",bg="black",fg="red")
+    
+    def show(self):
+        self.mcanvas.create_image(800,400,image = self.mainphoto)
+        self.mcanvas.create_window(1300, 700, window = self.b1)'''
 
 #전역객체 초기화
 root = Tk()
 mCanvas = Canvas(root, bg = "#222222", bd = 3, width = 1600, height = 800)
 mCanvas.pack()
-
 user = Character(775, 600, root, mCanvas)
-Pattern1 = Pattern1(root, mCanvas, user)
+pattern1 = Pattern1(root, mCanvas, user)
+mainphoto = PhotoImage(file = 'titlepage.png')
 
-Looper = object()
 
-#맵구현부
+#맵 구현
 flat1 = Map(0,750, 1600, mCanvas)
 flat2 = Map(80,600, 360, mCanvas)
 flat3 = Map(490,450, 620, mCanvas)
 flat4 = Map(1160,600, 360, mCanvas)
-map1 = [flat1,flat2,flat3,flat4]
+map1 = [flat1,flat2,flat3,flat4]        #check Collison 함수 사용에 용이하기 위해 리스트로 묶음
 
 #전역변수 초기화
 unit_speed = 0.5
@@ -33,23 +42,32 @@ selected = False                        #page2에서 Level 골랐는지 확인
 death = False
 
 #page
+#page0 = Start(root, mCanvas)
 page1 = Selector(mCanvas, root)
 page3 = Score(root, mCanvas)
 
+#Selector select버튼 대신 Insert 사용
 def keyInsert(event):
     global selected
     selected = True
 
 #초기화 할 것들 정리
 def init():
-    pass
+    global mainphoto
+    #global b1
 
+    b1 = Button(mCanvas, text="시작하기",width=20, height=3,
+            relief="solid",bg="black",fg="red", command = mainLoop)
+    mCanvas.create_image(800,400,image = mainphoto)
+    mCanvas.create_window(1300, 700, window = b1)
+
+#map 생성
 def createMap():
-    #map1 생성
     for flat in map1:
 
         flat.create()
 
+#page 2
 def selectorLoop(selected):
         page1.LevelSprite(selected)
 
@@ -58,7 +76,7 @@ def gameLoop():
     global game_speed
     global mCanvas
     global selected
-    global Pattern1
+    global pattern1
     global t
     global death
 
@@ -75,11 +93,11 @@ def gameLoop():
     if not(0 < user.x or user.x < 1600):
         user.setDx(0)
     t += 10
-    Pattern1.show1(t)
-    Pattern1.show2(t)
-    Pattern1.show3(t)
+    pattern1.show1(t)
+    pattern1.show2(t)
+    pattern1.show3(t)
     #Pattern1.show4(t)
-    if Pattern1.whetherTouched():
+    if pattern1.whetherTouched():
         #mCanvas.create_rectangle(0,0,100,100, fill = 'white')
         death = True
 
@@ -89,17 +107,21 @@ def gameLoop():
 def score():
     global page3
     global t
+    global selected
     
     page3.recieveScore(t)
     page3.show()
+    if page3.getrestart():
+        selected = False
+        death = False
+        page3.setrestart(False)
         
 
 def mainLoop():
     global selected
     global game_speed
     global death
-    global Looper
-
+    
     if not selected:
         selectorLoop(selected)
     elif selected and (not death):
@@ -110,13 +132,13 @@ def mainLoop():
     elif death:
         mCanvas.delete('all')
         score()
-        #root.after_cancel(Looper)
     
-    Looper = root.after(game_speed, mainLoop)
+    root.after(game_speed, mainLoop)
 
 
 #구현부
 init()
 root.bind("<Insert>", keyInsert)
-mainLoop()
+#mainLoop()
+#page0.show()
 root.mainloop()

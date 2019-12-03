@@ -1,5 +1,5 @@
 from Enemy import *
-class Pattern:
+class Pattern(object):
     def __init__(self, tk, canvas, character):
         self.root =tk
         self.mcanvas = canvas
