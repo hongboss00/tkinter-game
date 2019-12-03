@@ -15,17 +15,17 @@ class Enemy:
 
         self.index = index
         if index == 0:
-            self.width = 100
-            self.height = 100
+            self.width = 50
+            self.height = 50
         elif index == 1:
-            self.width = 100
-            self.height = 100
+            self.width = 72
+            self.height = 87
         elif index == 2:
-            self.width = 100
-            self.height = 100
+            self.width = 118
+            self.height = 181
         else:
-            self.width = 100
-            self.height = 100
+            self.width = 88
+            self.height = 68
 
         self.sprites = [PhotoImage(file = 'enemy1.png').subsample(3),
                         PhotoImage(file = 'enemy2.png').subsample(5),
@@ -69,12 +69,12 @@ class Enemy:
     
 
     def checkCollision(self, unit) :
-        p1x = self.x
-        p1y = self.y
-        p2x = self.x + self.height
-        p2y = self.y + self.width
-        p3x = unit.x
-        p3y = unit.y
+        p1x = self.x-self.width
+        p1y = self.y-self.height
+        p2x = self.x + self.width
+        p2y = self.y + self.height
+        p3x = unit.x - unit.width
+        p3y = unit.y - unit.height
         p4x = unit.x + unit.width
         p4y = unit.y + unit.height
         

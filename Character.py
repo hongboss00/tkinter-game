@@ -1,7 +1,7 @@
 from tkinter import *
 
 class Character:
-    def __init__(self, x, y, tk, canvas, width=40, height=40):
+    def __init__(self, x, y, tk, canvas, width=38, height=38):
         self.speed = 3
         self.jump = 8
         self.jump_option = 7
@@ -35,10 +35,6 @@ class Character:
 
 
     def draw(self):
-        '''self. obj = self.mcanvas.create_rectangle(self.x, self.y, 
-                                                  self.x + self.width,
-                                                  self.y + self.height,
-                                                  outline = "red", fill = 'yellow')'''
         self.obj = self.mcanvas.create_image(self.x, self.y, image = self.unit_photo[self.unit_index])
 
     #주인공 x, y 좌표 설정
@@ -68,8 +64,8 @@ class Character:
 
     def checkCollison(self, map):
         for obj in map:
-            p1x = self.x
-            p1y = self.y
+            p1x = self.x-self.width
+            p1y = self.y-self.height
             p2x = self.x + self.width
             p2y = self.y + self.height
             p3x = obj.x

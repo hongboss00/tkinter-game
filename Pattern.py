@@ -21,10 +21,10 @@ class Pattern1(Pattern):
 
         self.enemy1 = Enemy(0 ,0 ,self.root, self.mcanvas, 0)
 
-        self.enemy2_1 = Enemy(-100 , -100 ,self.root, self.mcanvas, 1)
-        self.enemy2_2 = Enemy(-100 ,900 ,self.root, self.mcanvas, 1)
-        self.enemy2_3 = Enemy(1700 ,-100 ,self.root, self.mcanvas, 1)
-        self.enemy2_4 = Enemy(1700 ,900 ,self.root, self.mcanvas, 1)
+        self.enemy2_1 = Enemy(-150 , -100 ,self.root, self.mcanvas, 1)
+        self.enemy2_2 = Enemy(-150 ,900 ,self.root, self.mcanvas, 1)
+        self.enemy2_3 = Enemy(1750 ,-100 ,self.root, self.mcanvas, 1)
+        self.enemy2_4 = Enemy(1750 ,900 ,self.root, self.mcanvas, 1)
 
         self.enemy3_1 = Enemy(400, 1000,self.root, self.mcanvas, 2)
         self.enemy3_2 = Enemy(800, 1200, self.root, self.mcanvas, 2)
@@ -45,18 +45,19 @@ class Pattern1(Pattern):
                          self.enemy4_1,  self.enemy4_2,  self.enemy4_3,
                          self.enemy5_1]
     
-    def show1(self):
-        self.enemy3_1.setDy(-5)
-        self.enemy3_2.setDy(-5)
-        self.enemy3_3.setDy(-5)
+    def show1(self, t):
+        if 9000> t > 1000:
+            self.enemy3_1.setDy(-5)
+            self.enemy3_2.setDy(-5)
+            self.enemy3_3.setDy(-5)
 
-        self.enemy3_1.move()
-        self.enemy3_2.move()
-        self.enemy3_3.move()
+            self.enemy3_1.move()
+            self.enemy3_2.move()
+            self.enemy3_3.move()
 
-        self.enemy3_1.draw()
-        self.enemy3_2.draw()
-        self.enemy3_3.draw()
+            self.enemy3_1.draw()
+            self.enemy3_2.draw()
+            self.enemy3_3.draw()
 
     def show2(self, t):
         if 9000 > t > 3000:
